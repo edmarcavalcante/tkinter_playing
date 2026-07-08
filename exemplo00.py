@@ -19,6 +19,8 @@ tk.Label(janela, text = "Nota 2: ").pack()
 entrada_nota2 = tk.Entry(janela)
 entrada_nota2.pack()
 
+
+
 tabela = ttk.Treeview(janela, columns=("Nome", "Nota 1", "Nota 2", "Média","Situação"), show="headings")
 
 tabela.heading("Nome",text="Nome do Aluno")
@@ -31,5 +33,35 @@ tabela.pack()
 scrollbar = ttk.Scrollbar(janela, orient="vertical", command=tabela.yview)
 tabela.configure(yscrollcommand=scrollbar.set)
 scrollbar.pack(side="right", fill="y")
+
+
+alunos_iniciais = [
+    ("Alice", 8.5, 7.0),
+    ("Bob", 7.5, 9.8),
+    ("Charlie", 6.0, 8.2),
+    ("David", 9.0, 6.5),
+    ("Eva", 8.2, 7.5),
+]
+
+for aluno in alunos_iniciais:
+    nome, nota1, nota2 = aluno
+    media = nota1 + nota2 / 2
+    situacao = "Aprovado" if media >=7 else "Recuperação" if media >=5 else "Reprovado"
+    tabela.insert("", "end", values=(nome, nota1, nota2, media, situacao))
+
+#def adicionar_aluno(nome, nota1, nota2):
+def adicionar_aluno(event):
+    nome = entrada_nome.get()
+    nota1 = float(entrada_nota1.get())
+    nota2 = float(entrada_nota2.get())
+    media = (nota1 + nota2) / 2
+    situacao = "Aprovado" if media >= 7 else "Recuperação" if media >= 5 else "Reprovado"
+
+    tabela.insert("", "end", values=(nome, nota1, nota2, f"{media:.2f}", situacao))
+
+
+enviar = tk.Button(janela, text= "Enviar",background="yellow")
+enviar.bind("<Button-1>", adicionar_aluno)
+enviar.pack(side= "top")
 
 janela.mainloop()
