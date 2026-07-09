@@ -50,7 +50,7 @@ for aluno in alunos_iniciais:
     tabela.insert("", "end", values=(nome, nota1, nota2, media, situacao))
 
 #def adicionar_aluno(nome, nota1, nota2):
-def adicionar_aluno(event):
+def adicionar_aluno(event=None):
     nome = entrada_nome.get()
     nota1 = float(entrada_nota1.get())
     nota2 = float(entrada_nota2.get())
@@ -59,9 +59,18 @@ def adicionar_aluno(event):
 
     tabela.insert("", "end", values=(nome, nota1, nota2, f"{media:.2f}", situacao))
 
+    entrada_nome.delete(0, 3)
+    entrada_nota1.delete(0, tk.END)
+    entrada_nota2.delete(0, tk.END)
 
-enviar = tk.Button(janela, text= "Enviar",background="yellow")
+
+enviar = tk.Button(janela, text="Enviar", background="yellow")
 enviar.bind("<Button-1>", adicionar_aluno)
 enviar.pack(side= "top")
+
+
+
+
+
 
 janela.mainloop()
